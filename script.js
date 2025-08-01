@@ -9,8 +9,9 @@ async function fetchLeaderboard() {
     const data = await response.json();
 
     const leaderboardData = data.affiliates.map(user => {
-      const wagered = parseFloat(user.wagered_amount || 0);
-      const income = parseFloat(user.income || 0);
+      // Parse wagered and income safely
+      const wagered = parseFloat((user.wagered_amount || "0").toString().replace(/[$,]/g, ""));
+      const income = parseFloat((user.income || "0").toString().replace(/[$,]/g, ""));
 
       // ✅ Final Correct Formula
       const points = Math.floor((wagered * 0.1) + (income * 2000));
@@ -22,9 +23,11 @@ async function fetchLeaderboard() {
       };
     });
 
+    // Sort by points descending
     leaderboardData.sort((a, b) => b.points - a.points);
     leaderboardTable.innerHTML = "";
 
+    // Populate leaderboard
     leaderboardData.forEach((player, index) => {
       const row = document.createElement("tr");
       const prize = index < prizes.length ? prizes[index] : "–";
@@ -51,6 +54,7 @@ async function fetchLeaderboard() {
   }
 }
 
+// Initial load + auto-refresh every 15 mins
 fetchLeaderboard();
 setInterval(fetchLeaderboard, 900000);
 
