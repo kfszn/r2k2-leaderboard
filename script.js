@@ -1,4 +1,4 @@
-const API_KEY = "OjwJ62YWj7gveE00kmkrCvRM4U30mh16";
+const API_KEY = "OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16";
 const ENDPOINT = "https://services.rainbet.com/v1/external/affiliates";
 
 // Prize tiers for top 7
@@ -19,17 +19,17 @@ async function fetchLeaderboard() {
     try {
         const response = await fetch(url);
         const data = await response.json();
-
-        // Example: Assume API returns an array of users like:
-        // [{ username: 'player1', wagered: 1234.56, earnings: 0.12 }, ... ]
-
-        const leaderboardData = data.map(user => {
-            const points = Math.floor((user.wagered * 0.1) + (user.earnings * 2000));
-            return {
-                username: user.username || "Unknown",
-                wagered: user.wagered || 0,
-                earnings: user.earnings || 0,
-                points
+        
+        // Extract affiliates array
+        const leaderboardData = data.affiliates.map(user => {
+            const wagered = parseFloat(user.wagered_amount || 0);
+            const income = parseFloat(user.income || 0);
+            const points = Math.floor((wagered * 0.1) + (income * 2000));
+            return { 
+                username: user.username || "Unknown", 
+                wagered, 
+                income, 
+                points 
             };
         });
 
@@ -40,8 +40,6 @@ async function fetchLeaderboard() {
 
         leaderboardData.forEach((player, index) => {
             const row = document.createElement("tr");
-
-            // Assign prize for top 7
             const prize = index < prizes.length ? prizes[index] : "–";
 
             row.innerHTML = `
@@ -52,6 +50,7 @@ async function fetchLeaderboard() {
 
             leaderboardTable.appendChild(row);
         });
+
     } catch (error) {
         console.error(error);
         leaderboardTable.innerHTML = "<tr><td colspan='3'>Error loading data</td></tr>";
