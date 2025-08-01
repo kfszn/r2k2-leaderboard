@@ -14,8 +14,8 @@ h1 {
 table {
   margin: 30px auto;
   border-collapse: collapse;
-  width: 90%;
-  max-width: 1000px;
+  width: 95%;
+  max-width: 1100px;
 }
 
 th, td {
@@ -30,6 +30,25 @@ th {
 
 tr:nth-child(even) td {
   background-color: #181818;
+}
+
+/* Top 3 highlights */
+.gold td {
+  background-color: #FFD700 !important;
+  color: black;
+  font-weight: bold;
+}
+
+.silver td {
+  background-color: #C0C0C0 !important;
+  color: black;
+  font-weight: bold;
+}
+
+.bronze td {
+  background-color: #CD7F32 !important;
+  color: black;
+  font-weight: bold;
 }
 
 /* Floating Kick Player */
