@@ -3,17 +3,17 @@ const prizes = ["$200", "$100", "$50", "$25", "$15", "$7.50", "$2.50"];
 
 async function fetchLeaderboard() {
     const leaderboardTable = document.getElementById('leaderboard-body');
-    leaderboardTable.innerHTML = "<tr><td colspan='3'>Loading...</td></tr>";
+    leaderboardTable.innerHTML = "<tr><td colspan='5'>Loading...</td></tr>";
 
     try {
-        // Fetch from your Vercel serverless function instead of Rainbet directly
+        // Fetch from your Vercel serverless function
         const response = await fetch('/api/leaderboard');
         const data = await response.json();
         
-        // Extract affiliates array from API response
+        // Extract affiliates array
         const leaderboardData = data.affiliates.map(user => {
             const wagered = parseFloat(user.wagered_amount || 0);
-            const income = parseFloat(user.income || 0); // income field is earnings
+            const income = parseFloat(user.income || 0); // earnings
             const points = Math.floor((wagered * 0.1) + (income * 2000));
             
             return { 
@@ -36,8 +36,10 @@ async function fetchLeaderboard() {
             const prize = index < prizes.length ? prizes[index] : "–";
 
             row.innerHTML = `
+                <td>${index + 1}</td>
+                <td>${player.username}</td>
                 <td>${player.points.toLocaleString()}</td>
-                <td>$${player.wagered.toLocaleString()}</td>
+                <td>$${player.wagered.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</td>
                 <td>${prize}</td>
             `;
 
@@ -46,7 +48,7 @@ async function fetchLeaderboard() {
 
     } catch (error) {
         console.error(error);
-        leaderboardTable.innerHTML = "<tr><td colspan='3'>Error loading data</td></tr>";
+        leaderboardTable.innerHTML = "<tr><td colspan='5'>Error loading data</td></tr>";
     }
 }
 
