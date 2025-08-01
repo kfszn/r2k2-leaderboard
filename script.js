@@ -1,30 +1,21 @@
-const API_KEY = "OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16";
-const ENDPOINT = "https://services.rainbet.com/v1/external/affiliates";
-
 // Prize tiers for top 7
 const prizes = ["$200", "$100", "$50", "$25", "$15", "$7.50", "$2.50"];
 
 async function fetchLeaderboard() {
-    const start_at = "2025-07-23"; // leaderboard start date
-    const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, '0');
-    const dd = String(today.getDate()).padStart(2, '0');
-    const end_at = `${yyyy}-${mm}-${dd}`;
-
-    const url = `${ENDPOINT}?start_at=${start_at}&end_at=${end_at}&key=${API_KEY}`;
     const leaderboardTable = document.getElementById('leaderboard-body');
     leaderboardTable.innerHTML = "<tr><td colspan='3'>Loading...</td></tr>";
 
     try {
-        const response = await fetch(url);
+        // Fetch from your Vercel serverless function instead of Rainbet directly
+        const response = await fetch('/api/leaderboard');
         const data = await response.json();
         
-        // Extract affiliates array
+        // Extract affiliates array from API response
         const leaderboardData = data.affiliates.map(user => {
             const wagered = parseFloat(user.wagered_amount || 0);
-            const income = parseFloat(user.income || 0);
+            const income = parseFloat(user.income || 0); // income field is earnings
             const points = Math.floor((wagered * 0.1) + (income * 2000));
+            
             return { 
                 username: user.username || "Unknown", 
                 wagered, 
@@ -36,8 +27,10 @@ async function fetchLeaderboard() {
         // Sort by points descending
         leaderboardData.sort((a, b) => b.points - a.points);
 
+        // Clear table
         leaderboardTable.innerHTML = "";
 
+        // Populate leaderboard rows
         leaderboardData.forEach((player, index) => {
             const row = document.createElement("tr");
             const prize = index < prizes.length ? prizes[index] : "–";
@@ -60,3 +53,11 @@ async function fetchLeaderboard() {
 // Initial load + auto-refresh every 15 mins
 fetchLeaderboard();
 setInterval(fetchLeaderboard, 900000);
+
+// Floating Kick player close button
+const closeBtn = document.getElementById('close-player');
+if (closeBtn) {
+    closeBtn.addEventListener('click', () => {
+        document.getElementById('floating-player').style.display = 'none';
+    });
+}
