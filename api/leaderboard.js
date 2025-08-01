@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const start_at = "2025-07-23"; 
+  const start_at = "2025-07-23"; // LB start
   const today = new Date();
   const yyyy = today.getFullYear();
   const mm = String(today.getMonth() + 1).padStart(2, '0');
