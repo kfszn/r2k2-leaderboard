@@ -3,7 +3,7 @@ import fetch from "node-fetch";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const SELF_URL = "https://r2k2data.onrender.com/leaderboard/top14";
+const SELF_URL = "https://services.rainbet.com/v1/external/affiliates";
 const API_KEY = "OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16";
 
 let cachedData = [];
@@ -33,7 +33,7 @@ function getDynamicApiUrl() {
   const startStr = start.toISOString().slice(0, 10);
   const endStr = end.toISOString().slice(0, 10);
 
-  return `https://services.rainbet.com/v1/external/affiliates?start_at=${startStr}&end_at=${endStr}&key=${'OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16'}`;
+  return `https://services.rainbet.com/v1/external/affiliates?start_at=${startStr}&end_at=${endStr}&key=${API_KEY}`;
 }
 
 
