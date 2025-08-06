@@ -1,13 +1,10 @@
 import express from "express";
 import fetch from "node-fetch";
-import dotenv from "dotenv";
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
 const SELF_URL = "https://r2k2data.onrender.com/leaderboard/top14";
-const API_KEY = 'OjwJ62WYj7gveE0OkmkrCvRM4U3Omh16';
+const API_KEY = "OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16";
 
 let cachedData = [];
 
