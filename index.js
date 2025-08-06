@@ -33,7 +33,7 @@ function getDynamicApiUrl() {
   const startStr = start.toISOString().slice(0, 10);
   const endStr = end.toISOString().slice(0, 10);
 
-  return `https://services.rainbet.com/v1/external/affiliates?start_at=${startStr}&end_at=${endStr}&key=${API_KEY}`;
+  return `https://services.rainbet.com/v1/external/affiliates?start_at=${startStr}&end_at=${endStr}&key=${OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16}`;
 }
 
 
