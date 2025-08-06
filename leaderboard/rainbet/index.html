@@ -436,8 +436,8 @@
 <script src="/js/toast.js"></script>
 <script>
 const CURRENT_API_URL = 'https://services.rainbet.com/v1/external/affiliates?start_at=2025-07-23&end_at=2025-08-22&key=OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16';
-const PREVIOUS_API_URL = 'https://r2k2data.onrender.com/leaderboard/prev';
-const roobetLogo = '/assets/rainbetlogo.png';
+// const PREVIOUS_API_URL = 'https://r2k2data.onrender.com/leaderboard/prev';
+const rainbetLogo = '/assets/rainbetlogo.png';
 const rewards = [100, 200, 50, 20, 15, 10, 5];
 const top3Glows = ['0 0 40px #C0C0C0', '0 0 40px #FFD700', '0 0 40px #CD7F32'];
 
@@ -494,7 +494,7 @@ async function loadLeaderboard(apiURL = CURRENT_API_URL) {
       if (index === 1) card.style.transform = 'translateY(25px) scale(1.2)';
       if (index === 2) card.style.transform = 'translateY(25px)';
       card.innerHTML = `
-        <img src="${roobetLogo}" style="width: 96px; height: auto; border-radius: 12px;">
+        <img src="${rainbetLogo}" style="width: 96px; height: auto; border-radius: 12px;">
         <div class="css-hca0vm"><span class="css-15a1lq3" style="font-weight:bold;">${username}</span></div>
         <div class="css-7ahevu ejrykqo0"><span class="css-1vqddgv">Wagered: </span>
           <span class="css-18icuxn"><div class="css-1y0ox2o"><span class="css-114dvlx">${wagered}</span></div></span>
@@ -509,7 +509,7 @@ async function loadLeaderboard(apiURL = CURRENT_API_URL) {
       row.innerHTML = `
         <div class="hide-mobile col-2"><b style="font-size: 18px;">#${place}</b></div>
         <div class="col-5">
-          <img src="${roobetLogo}" width="22" style="margin-right: 8px;">
+          <img src="${rainbetlogo}" width="22" style="margin-right: 8px;">
           <span style="font-weight:bold; font-size: 16px;">${username}</span>
         </div>
         <div class="col-2">
