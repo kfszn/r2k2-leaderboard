@@ -7,7 +7,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const SELF_URL = "https://r2k2data.onrender.com/leaderboard/top14";
-const API_KEY = process.env.RAINBET_API_KEY;  // ✅ now hidden
+const API_KEY = OjwJ62WYj7gveE0OkmkrCvRM4U3Omh16;
 
 let cachedData = [];
 
