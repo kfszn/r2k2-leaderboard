@@ -197,6 +197,81 @@
 
 </head>
 
+<script>
+  const API_KEY = "OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16";
+  const START_DATE = "2025-07-23";
+  const END_DATE = "2025-08-22";
+  const API_URL = `https://services.rainbet.com/v1/external/affiliates?start_at=${START_DATE}&end_at=${END_DATE}&key=${API_KEY}`;
+
+  function maskUsername(username) {
+    if (username.length <= 4) return username;
+    return username.slice(0, 2) + "***" + username.slice(-2);
+  }
+
+  async function fetchLeaderboard() {
+    try {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      if (!data.affiliates) throw new Error("No affiliate data");
+
+      const sorted = data.affiliates
+        .sort((a, b) => parseFloat(b.wagered_amount) - parseFloat(a.wagered_amount))
+        .slice(0, 10);
+
+      const leaderboard = sorted.map((entry, index) => {
+        return `<div class="lb-entry">
+          <span class="rank">#${index + 1}</span>
+          <span class="username">${maskUsername(entry.username)}</span>
+          <span class="wagered">$${parseFloat(entry.wagered_amount).toLocaleString()}</span>
+        </div>`;
+      }).join("");
+
+      const container = document.createElement("div");
+      container.className = "leaderboard";
+      container.innerHTML = `
+        <h2 style="text-align:center;margin-top:50px;">🏆 Monthly Leaderboard (7/23 - 8/22)</h2>
+        <div class="lb-container">${leaderboard}</div>
+      `;
+
+      document.body.appendChild(container);
+    } catch (error) {
+      console.error("Failed to fetch leaderboard:", error.message);
+    }
+  }
+
+  fetchLeaderboard();
+</script>
+
+<style>
+  .leaderboard {
+    max-width: 500px;
+    margin: 0 auto;
+    background: #111;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 0 30px rgba(39,117,202,0.6);
+  }
+  .lb-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .lb-entry {
+    display: flex;
+    justify-content: space-between;
+    background: #222;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .rank { color: #ffd700; }
+  .username { flex: 1; text-align: center; }
+  .wagered { color: #77f; }
+</style>
+
 <body>
     <div id="toast">
         <span id="message"></span>
