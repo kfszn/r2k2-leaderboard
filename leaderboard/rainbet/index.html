@@ -435,8 +435,8 @@
 <script src="/js/particles.js"></script>
 <script src="/js/toast.js"></script>
 <script>
+<script>
 const CURRENT_API_URL = 'https://services.rainbet.com/v1/external/affiliates?start_at=2025-07-23&end_at=2025-08-22&key=OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16';
-// const PREVIOUS_API_URL = 'https://r2k2data.onrender.com/leaderboard/prev';
 const rainbetLogo = '/assets/rainbetlogo.png';
 const rewards = [100, 200, 50, 20, 15, 10, 5];
 const top3Glows = ['0 0 40px #C0C0C0', '0 0 40px #FFD700', '0 0 40px #CD7F32'];
@@ -444,112 +444,98 @@ const top3Glows = ['0 0 40px #C0C0C0', '0 0 40px #FFD700', '0 0 40px #CD7F32'];
 function updateCountdown() {
   const el = document.getElementById("countdown");
   const now = new Date();
-
-  // Convert to JST
   const jstNow = new Date(now.getTime() + 9 * 60 * 60 * 1000);
-
-  // Get this month's 22nd 23:59:59 JST in UTC time
   const year = jstNow.getUTCFullYear();
   const month = jstNow.getUTCMonth();
-  const endTargetJST = new Date(Date.UTC(year, month, 22, 14, 59, 59)); // 23:59:59 JST = 14:59:59 UTC
-
+  const endTargetJST = new Date(Date.UTC(year, month, 22, 14, 59, 59));
   const diff = endTargetJST - now;
-
   if (diff <= 0) return el.textContent = "Ended";
-
   const d = Math.floor(diff / (1000 * 60 * 60 * 24));
   const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
   const m = Math.floor((diff / (1000 * 60)) % 60);
   const s = Math.floor((diff / 1000) % 60);
-
   el.textContent = `${d}d ${h}h ${m}m ${s}s`;
 }
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-
-async function loadLeaderboard(apiURL = CURRENT_API_URL) {
-  const res = await fetch(apiURL);
-  const data = await res.json();
-  const top3Container = document.querySelector(".css-gqrafh");
-  const rowsContainer = document.getElementById("leaderboard-rows");
-  top3Container.innerHTML = '';
-  rowsContainer.innerHTML = '';
-
-  data.forEach((entry, index) => {
-    const place = index + 1;
-    const reward = index < rewards.length ? `$ ${rewards[index]}` : '$ 0';
-    const wagered = `$ ${Number(entry.wagered).toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    })}`;
-    const username = entry.username;
-
-    if (index < 3) {
-      const card = document.createElement('div');
-      card.className = 'css-jehefp';
-      card.style.boxShadow = top3Glows[index];
-      card.style.position = 'relative';
-      if (index === 1) card.style.transform = 'translateY(25px) scale(1.2)';
-      if (index === 2) card.style.transform = 'translateY(25px)';
-      card.innerHTML = `
-        <img src="${rainbetLogo}" style="width: 96px; height: auto; border-radius: 12px;">
-        <div class="css-hca0vm"><span class="css-15a1lq3" style="font-weight:bold;">${username}</span></div>
-        <div class="css-7ahevu ejrykqo0"><span class="css-1vqddgv">Wagered: </span>
-          <span class="css-18icuxn"><div class="css-1y0ox2o"><span class="css-114dvlx">${wagered}</span></div></span>
-        </div>
-        <span class="css-v4675v"><div class="css-1y0ox2o"><span class="css-114dvlx glow">${reward}</span></div></span>
-      `;
-      top3Container.appendChild(card);
-    } else {
-      const row = document.createElement('div');
-      row.className = 'row list row-cols-5';
-      row.setAttribute('data-v-1d580398', '');
-      row.innerHTML = `
-        <div class="hide-mobile col-2"><b style="font-size: 18px;">#${place}</b></div>
-        <div class="col-5">
-          <img src="${rainbetLogo}" width="22" style="margin-right: 8px;">
-          <span style="font-weight:bold; font-size: 16px;">${username}</span>
-        </div>
-        <div class="col-2">
-          <div class="price-wrapper glow" style="font-weight:bold; font-size: 15px;">${reward}</div>
-        </div>
-        <div class="col-3">
-          <div class="price-wrapper" style="color: #FFF; font-weight:bold; font-size: 15px;">${wagered}</div>
-        </div>
-      `;
-      const wrapper = document.createElement("div");
-      wrapper.className = "leaderboard-row-wrapper";
-      wrapper.appendChild(row);
-      rowsContainer.appendChild(wrapper);
-    }
-  });
+function maskUsername(username) {
+  if (!username) return 'Unknown';
+  if (username.length <= 4) return username;
+  return username.slice(0, 2) + "***" + username.slice(-2);
 }
 
-const prevBtn = document.getElementById("prevLeaderboardBtn");
-const currBtn = document.getElementById("currentLeaderboardBtn");
-const countdownWrapper = document.getElementById("countdownWrapper");
+async function loadLeaderboard(apiURL = CURRENT_API_URL) {
+  try {
+    const res = await fetch(apiURL);
+    const json = await res.json();
+    const data = json.affiliates || [];
 
-// 🔁 Toggle between current and previous
-prevBtn?.addEventListener("click", () => {
-  loadLeaderboard(PREVIOUS_API_URL);
-  prevBtn.style.display = "none";
-  currBtn.style.display = "inline-flex";
-  countdownWrapper.style.visibility = "hidden";
-  countdownWrapper.style.height = "0";
-  countdownWrapper.style.overflow = "hidden";
-});
+    const sorted = data
+      .filter(user => parseFloat(user.wagered_amount) > 0)
+      .sort((a, b) => parseFloat(b.wagered_amount) - parseFloat(a.wagered_amount));
 
-currBtn?.addEventListener("click", () => {
-  loadLeaderboard(CURRENT_API_URL);
-  currBtn.style.display = "none";
-  prevBtn.style.display = "inline-flex";
-  countdownWrapper.style.visibility = "visible";
-  countdownWrapper.style.height = "auto";
-  countdownWrapper.style.overflow = "visible";
-});
+    const top10 = sorted.slice(0, 10);
 
-// ✅ Initial load
+    const top3Container = document.querySelector(".css-gqrafh");
+    const rowsContainer = document.getElementById("leaderboard-rows");
+    top3Container.innerHTML = '';
+    rowsContainer.innerHTML = '';
+
+    top10.forEach((entry, index) => {
+      const place = index + 1;
+      const reward = index < rewards.length ? `$ ${rewards[index]}` : '$ 0';
+      const wagered = `$ ${parseFloat(entry.wagered_amount).toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      })}`;
+      const username = maskUsername(entry.username);
+
+      if (index < 3) {
+        const card = document.createElement('div');
+        card.className = 'css-jehefp';
+        card.style.boxShadow = top3Glows[index];
+        card.style.position = 'relative';
+        if (index === 1) card.style.transform = 'translateY(25px) scale(1.2)';
+        if (index === 2) card.style.transform = 'translateY(25px)';
+        card.innerHTML = `
+          <img src="${rainbetLogo}" style="width: 96px; height: auto; border-radius: 12px;">
+          <div class="css-hca0vm"><span class="css-15a1lq3" style="font-weight:bold;">${username}</span></div>
+          <div class="css-7ahevu ejrykqo0"><span class="css-1vqddgv">Wagered: </span>
+            <span class="css-18icuxn"><div class="css-1y0ox2o"><span class="css-114dvlx">${wagered}</span></div></span>
+          </div>
+          <span class="css-v4675v"><div class="css-1y0ox2o"><span class="css-114dvlx glow">${reward}</span></div></span>
+        `;
+        top3Container.appendChild(card);
+      } else {
+        const row = document.createElement('div');
+        row.className = 'row list row-cols-5';
+        row.setAttribute('data-v-1d580398', '');
+        row.innerHTML = `
+          <div class="hide-mobile col-2"><b style="font-size: 18px;">#${place}</b></div>
+          <div class="col-5">
+            <img src="${rainbetLogo}" width="22" style="margin-right: 8px;">
+            <span style="font-weight:bold; font-size: 16px;">${username}</span>
+          </div>
+          <div class="col-2">
+            <div class="price-wrapper glow" style="font-weight:bold; font-size: 15px;">${reward}</div>
+          </div>
+          <div class="col-3">
+            <div class="price-wrapper" style="color: #FFF; font-weight:bold; font-size: 15px;">${wagered}</div>
+          </div>
+        `;
+        const wrapper = document.createElement("div");
+        wrapper.className = "leaderboard-row-wrapper";
+        wrapper.appendChild(row);
+        rowsContainer.appendChild(wrapper);
+      }
+    });
+  } catch (err) {
+    console.error("[❌] Failed to load leaderboard:", err.message);
+    document.getElementById("leaderboard-rows").innerHTML = "<p style='color:red;'>Failed to load data.</p>";
+  }
+}
+
 loadLeaderboard();
 </script>
