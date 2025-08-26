@@ -1,1 +1,12 @@
-
+{
+  "name": "r2k2-rainbet-proxy",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
