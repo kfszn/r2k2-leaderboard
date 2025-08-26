@@ -97,23 +97,28 @@ async function fetchLeaderboard() {
   const { startISO, endISO, endDate } = getCycleDates();
   updateCountdown(endDate);
 
-  const API_URL = `https://services.rainbet.com/v1/external/affiliates?start_at=${startISO}&end_at=${endISO}&key=${encodeURIComponent(RAINBET_KEY)}`;
+  const url = `https://services.rainbet.com/v1/external/affiliates?start_at=${startISO}&end_at=${endISO}&key=${encodeURIComponent(RAINBET_KEY)}`;
+  const rows = document.getElementById("leaderboard-rows");
 
   try {
-    const res = await fetch(API_URL, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) {
+      const text = await res.text().catch(() => "");
+      throw new Error(`HTTP ${res.status} — ${text.slice(0, 200)}`);
+    }
     const json = await res.json();
     const affiliates = (json && json.affiliates) || [];
-
     const sorted = affiliates
-      .filter((u) => Number(u.wagered_amount) > 0)
-      .sort((a, b) => Number(b.wagered_amount) - Number(a.wagered_amount));
-
+      .filter(u => Number(u.wagered_amount) > 0)
+      .sort((a,b) => Number(b.wagered_amount) - Number(a.wagered_amount));
     renderLeaderboard(sorted.slice(0, 10));
   } catch (err) {
     console.error("Leaderboard error:", err);
-    document.getElementById("leaderboard-rows").innerHTML =
-      "<p style='color:red;'>Failed to load data.</p>";
+    rows.innerHTML = `<p style="color:red;white-space:pre-wrap">
+      Failed to load data.
+      URL: ${url}
+      Error: ${String(err)}
+    </p>`;
   }
 }
 
