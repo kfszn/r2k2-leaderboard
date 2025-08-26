@@ -2,25 +2,25 @@
 <html lang="en">
 <head>
   <title>R2K2 - Rainbet Leaderboard</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Exclusive wager races on Rainbet for code R2K2!">
-  <meta property="og:image" content="assets/logo.png">
-  <link rel="icon" type="image/png" href="assets/logo.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous">
-  <link rel="stylesheet" href="assets/css/app.css">
-  <link rel="stylesheet" href="assets/css/lb.css">
-  <link rel="stylesheet" href="assets/css/vendor.css">
-  <link rel="stylesheet" href="assets/css/cards.css">
-  <link rel="stylesheet" href="assets/css/toast.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Exclusive wager races on Rainbet for code R2K2!" />
+  <meta property="og:image" content="assets/logo.png" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="css/app.css" />
+  <link rel="stylesheet" href="css/lb.css" />
+  <link rel="stylesheet" href="css/vendor.css" />
+  <link rel="stylesheet" href="css/cards.css" />
+  <link rel="stylesheet" href="css/toast.css" />
   <style>
-    /* (kept your inline styles exactly the same) */
-    .draggable{position:fixed;bottom:15px;right:15px;width:350px;height:250px;box-shadow:0 4px 8px rgba(0,0,0,.1);border-radius:8px;overflow:hidden;z-index:1000;background:white;border:2px solid #2775ca;box-shadow:0 0 100px rgba(39,117,202,1)}
-    .controls{display:flex;align-items:center;background-color:#333;padding:5px;cursor:move}
+    /* your inline styles kept as-is */
+    .draggable{position:fixed;bottom:15px;right:15px;width:350px;height:250px;border-radius:8px;overflow:hidden;z-index:1000;background:#fff;border:2px solid #2775ca;box-shadow:0 0 100px rgba(39,117,202,1)}
+    .controls{display:flex;align-items:center;background:#333;padding:5px;cursor:move}
     .drag-handle{flex-grow:1;text-align:left;color:#2775ca;font-size:20px;font-weight:900;padding:0 15px}
     .close-btn{cursor:pointer;background:none;border:none;color:#2775ca;font-size:20px;font-weight:900;line-height:30px;padding:0 20px}
     iframe{width:100%;height:calc(100% - 40px);border:none}
-    .minimized-icon{display:none;align-items:center;justify-content:center;position:fixed;bottom:15px;right:15px;width:50px;height:50px;border-radius:25px;background-color:#333;color:white;font-size:30px;z-index:1001;cursor:pointer;box-shadow:0 0 100px rgba(39,117,202,1)}
+    .minimized-icon{display:none;align-items:center;justify-content:center;position:fixed;bottom:15px;right:15px;width:50px;height:50px;border-radius:25px;background:#333;color:#fff;font-size:30px;z-index:1001;cursor:pointer;box-shadow:0 0 100px rgba(39,117,202,1)}
     .open-btn{background:none;border:none;color:#2775ca;font-size:20px;font-weight:900;cursor:pointer}
     @media (max-width:570px){.draggable{left:50%;transform:translateX(-50%)}}
     @keyframes fadeInUp{to{opacity:1;transform:translateY(0)}}
@@ -36,7 +36,7 @@
     .leaderboard-section{margin:50px auto;max-width:1200px;padding:0 20px}
     .leaderboard-error{color:red;text-align:center;font-size:18px}
     .social-media-cards,.footer-socials{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:30px}
-    .social-media-cards .card,.footer-socials a.social{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);padding:10px 15px;border-radius:8px;text-decoration:none;color:white;font-weight:500;transition:transform .2s}
+    .social-media-cards .card,.footer-socials a.social{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);padding:10px 15px;border-radius:8px;text-decoration:none;color:#fff;font-weight:500;transition:transform .2s}
     .social-media-cards .card:hover,.footer-socials a.social:hover{transform:translateY(-3px)}
     .social-media-cards .icon,.footer-socials .social-img{width:24px;height:24px;object-fit:contain}
   </style>
@@ -67,19 +67,20 @@
   <header>
     <nav>
       <div class="logo-title">
-        <img src="assets/logo.png" alt="R2K2 logo" class="logo">
+        <img src="assets/logo.png" alt="R2K2 logo" class="logo" />
         <h1 class="title">R2K2</h1>
       </div>
       <ul class="nav-links">
-        <li><a href="#leaderboard" aria-current="page">Leaderboard</a></li>
+        <!-- point to separate page now -->
+        <li><a href="leaderboard.html">Leaderboard</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <div class="row text" style="margin-top:50px;">
+    <div class="row text" style="margin-top: 50px;">
       <span class="title">COMPETE ON OUR LEADERBOARDS!</span>
-      <div class="toggle-images" style="margin-top:20px;">
+      <div class="toggle-images" style="margin-top: 20px;">
         <div class="image-wrapper">
           <img class="game-image clash-image" id="clashImage2" src="assets/rainbet.png" alt="Rainbet leaderboard promotion" style="cursor:pointer;opacity:1;" onclick="window.location.href='leaderboard.html'">
           <div class="label">
@@ -89,7 +90,7 @@
       </div>
     </div>
 
-    <section id="leaderboard" class="leaderboard-section">
+    <section class="leaderboard-section">
       <h2 class="title">Leaderboard</h2>
       <div id="top3-cards" class="css-gqrafh"></div>
       <div id="leaderboard-rows"></div>
@@ -100,19 +101,11 @@
       <a href="https://rainbet.com/?r=R2K2" class="card-link" target="_blank" rel="noopener">
         <div class="MuiBox-root css-1o7r9kk">
           <div class="MuiBox-root css-1t0wa4v">
-            <img src="assets/rainbet.png" alt="Rainbet promotion">
+            <img src="assets/rainbet.png" alt="Rainbet promotion" />
           </div>
           <div class="code-container MuiBox-root css-0">
-            <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1rmbjih" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
-              <path d="M6.41 6 5 7.41 9.58 12 5 16.59 6.41 18l6-6z"></path>
-              <path d="m13 6-1.41 1.41L16.17 12l-4.58 4.59L13 18l6-6z"></path>
-            </svg>
             <p class="MuiTypography-root MuiTypography-body1" style="font-size:24px;">Code</p>
             <p class="MuiTypography-root MuiTypography-body1 code">R2K2</p>
-            <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-1m8kjhh" focusable="false" aria-hidden="true" viewBox="0 0 24 24">
-              <path d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"></path>
-              <path d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"></path>
-            </svg>
           </div>
           <div class="MuiBox-root css-18dqm7l">
             <div class="description MuiBox-root css-0">
@@ -130,15 +123,17 @@
       </a>
     </div>
 
-    <div class="row text" style="margin-top:50px;">
+    <div class="row text" style="margin-top: 50px;">
       <span class="title">Our Socials!</span>
     </div>
     <div class="social-media-cards">
       <a href="https://kick.com/R2Ktwo" target="_blank" class="card kick" rel="noopener">
-        <img src="assets/kick.png" alt="Kick logo" class="icon"><span>@R2Ktwo</span>
+        <img src="assets/kick.png" alt="Kick logo" class="icon" />
+        <span>@R2Ktwo</span>
       </a>
       <a href="https://discord.gg/DwpA8vaGPj" target="_blank" class="card discord" rel="noopener">
-        <img src="assets/discord.png" alt="Discord logo" class="icon"><span>@R2Ktwo</span>
+        <img src="assets/discord.png" alt="Discord logo" class="icon" />
+        <span>@R2Ktwo</span>
       </a>
     </div>
   </main>
@@ -159,10 +154,12 @@
       <span class="title">Socials</span>
       <div class="footer-socials">
         <a href="https://kick.com/R2Ktwo" target="_blank" class="social" rel="noopener">
-          <img src="assets/kick.png" alt="Kick logo" class="social-img"><span>Kick</span>
+          <img src="assets/kick.png" alt="Kick logo" class="social-img" />
+          <span>Kick</span>
         </a>
         <a href="https://discord.gg/DwpA8vaGPj" target="_blank" class="social" rel="noopener">
-          <img src="assets/discord.png" alt="Discord logo" class="social-img"><span>Discord</span>
+          <img src="assets/discord.png" alt="Discord logo" class="social-img" />
+          <span>Discord</span>
         </a>
       </div>
     </div>
@@ -175,10 +172,10 @@
   </footer>
 
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" crossorigin="anonymous"></script>
-  <script src="assets/js/app.js"></script>
-  <script src="assets/js/particles.js"></script>
-  <script src="assets/js/toast.js"></script>
-  <!-- removed the accidental /index.js include -->
+  <script src="js/app.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/toast.js"></script>
+  <!-- removed: <script src="/index.js"> -->
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       const iframe = document.querySelector("iframe[data-src]");
