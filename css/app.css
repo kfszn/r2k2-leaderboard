@@ -25868,3 +25868,53 @@ tr:hover {
 .cards-container-videos {
   animation: slideInUp 0.8s ease forwards;
 }
+/* === MOBILE CLEANUP FIXES === */
+
+/* Prevent nav links from stacking weirdly */
+header nav {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  flex-wrap: nowrap !important;
+}
+
+.nav-links {
+  display: flex !important;
+  flex-direction: row !important;
+  list-style: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  gap: 16px !important;
+}
+
+.nav-links li {
+  margin: 0 !important;
+}
+
+.nav-links a {
+  display: inline-block !important;
+  padding: 8px 10px !important;
+  font-size: 16px !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+}
+
+/* Center the hero promo */
+.row.text {
+  text-align: center !important;
+  padding: 24px 16px !important;
+}
+
+/* Make footer stack clean on mobile */
+footer .inner-footer {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 24px !important;
+  align-items: flex-start !important;
+  padding: 24px 16px !important;
+}
+
+footer .inner-footer .col,
+footer .inner-footer .col-5 {
+  flex: 1 1 180px !important;
+}
