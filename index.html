@@ -1,37 +1,59 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <title>R2K2 - Rainbet Leaderboard</title>
   <meta charset="utf-8" />
+  <title>R2K2 — Home</title>
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="Exclusive wager races on Rainbet for code R2K2!" />
   <meta property="og:image" content="assets/logo.png" />
   <link rel="icon" type="image/png" href="assets/logo.png" />
 
-  <!-- CSS (your folders) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" crossorigin="anonymous" />
+  <!-- Keep ONLY your general styles on the home page -->
   <link rel="stylesheet" href="css/app.css" />
-  <link rel="stylesheet" href="css/lb.css" />
   <link rel="stylesheet" href="css/vendor.css" />
   <link rel="stylesheet" href="css/cards.css" />
 
+  <!-- Page-scoped fixes so nothing else can override -->
   <style>
-    /* kept essentials for the draggable player + small tweaks */
-    .draggable{position:fixed;bottom:15px;right:15px;width:350px;height:250px;border-radius:8px;overflow:hidden;z-index:1000;background:#fff;border:2px solid #2775ca;box-shadow:0 0 100px rgba(39,117,202,1)}
-    .controls{display:flex;align-items:center;background:#333;padding:5px;cursor:move}
-    .drag-handle{flex-grow:1;text-align:left;color:#2775ca;font-size:20px;font-weight:900;padding:0 15px}
-    .close-btn{cursor:pointer;background:none;border:none;color:#2775ca;font-size:20px;font-weight:900;line-height:30px;padding:0 20px}
-    iframe{width:100%;height:calc(100% - 40px);border:none}
-    .minimized-icon{display:none;align-items:center;justify-content:center;position:fixed;bottom:15px;right:15px;width:50px;height:50px;border-radius:25px;background:#333;color:#fff;font-size:30px;z-index:1001;cursor:pointer;box-shadow:0 0 100px rgba(39,117,202,1)}
-    .open-btn{background:none;border:none;color:#2775ca;font-size:20px;font-weight:900;cursor:pointer}
-    .social-media-cards,.footer-socials{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:30px}
-    .social-media-cards .card,.footer-socials a.social{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);padding:10px 15px;border-radius:8px;text-decoration:none;color:#fff;font-weight:500;transition:transform .2s}
-    .social-media-cards .card:hover,.footer-socials a.social:hover{transform:translateY(-3px)}
-    .social-media-cards .icon,.footer-socials .social-img{width:24px;height:24px;object-fit:contain}
-    @media (max-width:570px){.draggable{left:50%;transform:translateX(-50%)}}
+    .home, .home * { box-sizing: border-box; }
+    .home { margin: 0; overflow-x: hidden; }
+
+    .home header nav{
+      display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 16px;
+    }
+    .home .logo-title{display:flex;align-items:center;gap:10px;}
+    .home .nav-links{list-style:none;display:flex;gap:16px;margin:0;padding:0;}
+    .home .nav-links a{display:inline-block;padding:8px 10px;line-height:1;text-decoration:none;}
+
+    .home main{max-width:1100px;margin:0 auto;padding:0 16px;}
+    .home .row.text{text-align:center;padding:24px 0;}
+    .home .toggle-images .image-wrapper{display:inline-block;}
+
+    .home .social-media-cards,
+    .home .footer-socials{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:30px}
+    .home .social-media-cards .card,
+    .home .footer-socials a.social{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);padding:10px 15px;border-radius:8px;text-decoration:none;color:#fff;font-weight:500}
+    .home .social-media-cards .icon,.home .footer-socials .social-img{width:24px;height:24px;object-fit:contain}
+
+    .home footer .inner-footer{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start;padding:24px 16px;}
+    .home footer .inner-footer .col,
+    .home footer .inner-footer .col-5{flex:1 1 180px;}
+
+    /* draggable player */
+    .home .draggable{position:fixed;bottom:15px;right:15px;width:350px;height:250px;border-radius:8px;overflow:hidden;z-index:1000;background:#fff;border:2px solid #2775ca;box-shadow:0 0 100px rgba(39,117,202,1)}
+    .home .controls{display:flex;align-items:center;background:#333;padding:5px;cursor:move}
+    .home .drag-handle{flex-grow:1;text-align:left;color:#2775ca;font-size:20px;font-weight:900;padding:0 15px}
+    .home .close-btn{cursor:pointer;background:none;border:none;color:#2775ca;font-size:20px;font-weight:900;line-height:30px;padding:0 20px}
+    .home iframe{width:100%;height:calc(100% - 40px);border:none}
+    .home .minimized-icon{display:none;align-items:center;justify-content:center;position:fixed;bottom:15px;right:15px;width:50px;height:50px;border-radius:25px;background:#333;color:#fff;font-size:30px;z-index:1001;cursor:pointer;box-shadow:0 0 100px rgba(39,117,202,1)}
+    .home .open-btn{background:none;border:none;color:#2775ca;font-size:20px;font-weight:900;cursor:pointer}
+    @media (max-width:570px){ .home .draggable{left:50%;transform:translateX(-50%)} }
+
+    /* hide any accidental leaderboard containers on home */
+    .home #top3-cards,.home #leaderboard-rows,.home #leaderboard-error{display:none !important;}
   </style>
 </head>
-<body>
+<body class="home">
   <!-- Draggable Kick player -->
   <div id="draggable-player" class="draggable" role="region" aria-label="Live stream player">
     <div id="controls" class="controls">
@@ -59,7 +81,6 @@
         <h1 class="title">R2K2</h1>
       </div>
       <ul class="nav-links">
-        <!-- Link to separate page -->
         <li><a href="leaderboard.html">Leaderboard</a></li>
       </ul>
     </nav>
@@ -71,26 +92,21 @@
       <span class="title">COMPETE ON OUR LEADERBOARDS!</span>
       <div class="toggle-images" style="margin-top:20px;">
         <div class="image-wrapper">
-          <img class="game-image clash-image" id="clashImage2" src="assets/rainbet.png" alt="Rainbet leaderboard promotion" style="cursor:pointer;opacity:1;" onclick="window.location.href='leaderboard.html'">
-          <div class="label">
-            <div class="price-wrapper glow" style="font-size:26px;">$ 400</div>
-          </div>
+          <img class="game-image clash-image" src="assets/rainbet.png" alt="Rainbet leaderboard promotion"
+               style="cursor:pointer;opacity:1;" onclick="window.location.href='leaderboard.html'">
+          <div class="label"><div class="price-wrapper glow" style="font-size:26px;">$ 400</div></div>
         </div>
       </div>
     </div>
 
     <!-- Socials -->
-    <div class="row text" style="margin-top:50px;">
-      <span class="title">Our Socials!</span>
-    </div>
+    <div class="row text" style="margin-top:50px;"><span class="title">Our Socials!</span></div>
     <div class="social-media-cards">
       <a href="https://kick.com/R2Ktwo" target="_blank" class="card kick" rel="noopener">
-        <img src="assets/kick.png" alt="Kick logo" class="icon" />
-        <span>@R2Ktwo</span>
+        <img src="assets/kick.png" alt="Kick logo" class="icon" /><span>@R2Ktwo</span>
       </a>
       <a href="https://discord.gg/DwpA8vaGPj" target="_blank" class="card discord" rel="noopener">
-        <img src="assets/discord.png" alt="Discord logo" class="icon" />
-        <span>@R2Ktwo</span>
+        <img src="assets/discord.png" alt="Discord logo" class="icon" /><span>@R2Ktwo</span>
       </a>
     </div>
   </main>
@@ -111,19 +127,17 @@
       <span class="title">Socials</span>
       <div class="footer-socials">
         <a href="https://kick.com/R2Ktwo" target="_blank" class="social" rel="noopener">
-          <img src="assets/kick.png" alt="Kick logo" class="social-img" />
-          <span>Kick</span>
+          <img src="assets/kick.png" alt="Kick logo" class="social-img" /><span>Kick</span>
         </a>
         <a href="https://discord.gg/DwpA8vaGPj" target="_blank" class="social" rel="noopener">
-          <img src="assets/discord.png" alt="Discord logo" class="social-img" />
-          <span>Discord</span>
+          <img src="assets/discord.png" alt="Discord logo" class="social-img" /><span>Discord</span>
         </a>
       </div>
     </div>
     <div class="col">
       <span class="title">BeGambleAware.com</span>
       <span class="subtitle" style="font-size:9px;">
-        Responsible Gambling Advisory: While gambling can be entertaining, it's crucial to be aware of the associated risks. Exercise self-control, set limits, and seek support if needed. Enjoy responsibly. We are not responsible for any losses or damages caused by gambling.
+        Responsible Gambling Advisory: While gambling can be entertaining, it's crucial to be aware of the associated risks. Exercise self-control, set limits, and seek support if needed.
       </span>
     </div>
   </footer>
