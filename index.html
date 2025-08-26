@@ -3,18 +3,20 @@
 <head>
   <title>R2K2 - Rainbet Leaderboard</title>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="Exclusive wager races on Rainbet for code R2K2!" />
   <meta property="og:image" content="assets/logo.png" />
   <link rel="icon" type="image/png" href="assets/logo.png" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+
+  <!-- CSS (your folders) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/app.css" />
   <link rel="stylesheet" href="css/lb.css" />
   <link rel="stylesheet" href="css/vendor.css" />
   <link rel="stylesheet" href="css/cards.css" />
-  <link rel="stylesheet" href="css/toast.css" />
+
   <style>
-    /* your inline styles kept as-is */
+    /* kept essentials for the draggable player + small tweaks */
     .draggable{position:fixed;bottom:15px;right:15px;width:350px;height:250px;border-radius:8px;overflow:hidden;z-index:1000;background:#fff;border:2px solid #2775ca;box-shadow:0 0 100px rgba(39,117,202,1)}
     .controls{display:flex;align-items:center;background:#333;padding:5px;cursor:move}
     .drag-handle{flex-grow:1;text-align:left;color:#2775ca;font-size:20px;font-weight:900;padding:0 15px}
@@ -22,28 +24,15 @@
     iframe{width:100%;height:calc(100% - 40px);border:none}
     .minimized-icon{display:none;align-items:center;justify-content:center;position:fixed;bottom:15px;right:15px;width:50px;height:50px;border-radius:25px;background:#333;color:#fff;font-size:30px;z-index:1001;cursor:pointer;box-shadow:0 0 100px rgba(39,117,202,1)}
     .open-btn{background:none;border:none;color:#2775ca;font-size:20px;font-weight:900;cursor:pointer}
-    @media (max-width:570px){.draggable{left:50%;transform:translateX(-50%)}}
-    @keyframes fadeInUp{to{opacity:1;transform:translateY(0)}}
-    @media (max-width:768px){.code-description-container{flex-direction:column}.code-description-card,.code-image{min-width:100%}.code-image{order:-1;margin-bottom:20px}}
-    .code-description-card:hover{transform:translateY(-5px);box-shadow:0 15px 30px rgba(39,117,202,.5)}
-    @keyframes float{0%{transform:translateY(0) scaleX(1) rotate(20deg)}50%{transform:translateY(-10px) scaleX(1) rotate(20deg)}100%{transform:translateY(0) scaleX(1) rotate(20deg)}}
-    @keyframes floatLeft{0%{transform:translateY(0) scaleX(-1) rotate(20deg)}50%{transform:translateY(-10px) scaleX(-1) rotate(20deg)}100%{transform:translateY(0) scaleX(-1) rotate(20deg)}}
-    .coin-container{position:relative;height:0;margin:0}
-    .coin-left,.coin-right{position:absolute;height:100px;width:auto;opacity:.7;top:-50px}
-    .coin-left{left:22%;animation:floatLeft 3s ease-in-out infinite}
-    .coin-right{right:25%;animation:float 3s ease-in-out infinite}
-    @media screen and (max-width:768px){.coin-container{display:none}}
-    .leaderboard-section{margin:50px auto;max-width:1200px;padding:0 20px}
-    .leaderboard-error{color:red;text-align:center;font-size:18px}
     .social-media-cards,.footer-socials{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;margin-top:30px}
     .social-media-cards .card,.footer-socials a.social{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.05);padding:10px 15px;border-radius:8px;text-decoration:none;color:#fff;font-weight:500;transition:transform .2s}
     .social-media-cards .card:hover,.footer-socials a.social:hover{transform:translateY(-3px)}
     .social-media-cards .icon,.footer-socials .social-img{width:24px;height:24px;object-fit:contain}
+    @media (max-width:570px){.draggable{left:50%;transform:translateX(-50%)}}
   </style>
 </head>
 <body>
-  <div id="toast"><span id="message"></span></div>
-
+  <!-- Draggable Kick player -->
   <div id="draggable-player" class="draggable" role="region" aria-label="Live stream player">
     <div id="controls" class="controls">
       <div id="drag-handle" class="drag-handle" aria-label="Drag to move player">&#x2630;</div>
@@ -56,11 +45,10 @@
   </div>
 
   <canvas id="particleCanvas" aria-hidden="true"></canvas>
-  <div class="glow-container">
-    <div class="left-glow" aria-hidden="true"></div>
-    <div class="right-glow" aria-hidden="true"></div>
+  <div class="glow-container" aria-hidden="true">
+    <div class="left-glow"></div>
+    <div class="right-glow"></div>
   </div>
-
   <object type="image/png" data="assets/left-rainbet.png" id="leftsvg" height="100%" aria-hidden="true"></object>
   <object type="image/png" data="assets/right-rainbet.png" id="rightsvg" height="100%" aria-hidden="true"></object>
 
@@ -71,16 +59,17 @@
         <h1 class="title">R2K2</h1>
       </div>
       <ul class="nav-links">
-        <!-- point to separate page now -->
+        <!-- Link to separate page -->
         <li><a href="leaderboard.html">Leaderboard</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-    <div class="row text" style="margin-top: 50px;">
+    <!-- Hero / promo -->
+    <div class="row text" style="margin-top:50px;">
       <span class="title">COMPETE ON OUR LEADERBOARDS!</span>
-      <div class="toggle-images" style="margin-top: 20px;">
+      <div class="toggle-images" style="margin-top:20px;">
         <div class="image-wrapper">
           <img class="game-image clash-image" id="clashImage2" src="assets/rainbet.png" alt="Rainbet leaderboard promotion" style="cursor:pointer;opacity:1;" onclick="window.location.href='leaderboard.html'">
           <div class="label">
@@ -90,40 +79,8 @@
       </div>
     </div>
 
-    <section class="leaderboard-section">
-      <h2 class="title">Leaderboard</h2>
-      <div id="top3-cards" class="css-gqrafh"></div>
-      <div id="leaderboard-rows"></div>
-      <div id="leaderboard-error" class="leaderboard-error" style="display:none;"></div>
-    </section>
-
-    <div class="card-container">
-      <a href="https://rainbet.com/?r=R2K2" class="card-link" target="_blank" rel="noopener">
-        <div class="MuiBox-root css-1o7r9kk">
-          <div class="MuiBox-root css-1t0wa4v">
-            <img src="assets/rainbet.png" alt="Rainbet promotion" />
-          </div>
-          <div class="code-container MuiBox-root css-0">
-            <p class="MuiTypography-root MuiTypography-body1" style="font-size:24px;">Code</p>
-            <p class="MuiTypography-root MuiTypography-body1 code">R2K2</p>
-          </div>
-          <div class="MuiBox-root css-18dqm7l">
-            <div class="description MuiBox-root css-0">
-              <p class="MuiTypography-root MuiTypography-body1">EXCLUSIVE REWARDS</p>
-            </div>
-            <div class="description MuiBox-root css-0">
-              <p class="MuiTypography-root MuiTypography-body1">MONTHLY LEADERBOARD</p>
-            </div>
-            <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:16px;">
-              <a class="MuiButton-root signup-button" href="https://rainbet.com/?r=R2K2" target="_blank" rel="noopener">Sign up</a>
-              <a class="MuiButton-root signup-button" href="leaderboard.html">Leaderboard</a>
-            </div>
-          </div>
-        </div>
-      </a>
-    </div>
-
-    <div class="row text" style="margin-top: 50px;">
+    <!-- Socials -->
+    <div class="row text" style="margin-top:50px;">
       <span class="title">Our Socials!</span>
     </div>
     <div class="social-media-cards">
@@ -166,17 +123,16 @@
     <div class="col">
       <span class="title">BeGambleAware.com</span>
       <span class="subtitle" style="font-size:9px;">
-        Responsible Gambling Advisory: While gambling can be entertaining, it's crucial to be aware of the associated risks. Exercise self-control, set limits, and seek support if needed. Enjoy the excitement responsibly and prioritize your well-being. We are not responsible for any losses or damages caused by gambling.
+        Responsible Gambling Advisory: While gambling can be entertaining, it's crucial to be aware of the associated risks. Exercise self-control, set limits, and seek support if needed. Enjoy responsibly. We are not responsible for any losses or damages caused by gambling.
       </span>
     </div>
   </footer>
 
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js/vcd15cbe7772f49c399c6a5babf22c1241717689176015" crossorigin="anonymous"></script>
+  <!-- JS -->
   <script src="js/app.js"></script>
   <script src="js/particles.js"></script>
-  <script src="js/toast.js"></script>
-  <!-- removed: <script src="/index.js"> -->
   <script>
+    // lazy-load Kick iframe & drag/minimize controls
     document.addEventListener("DOMContentLoaded", () => {
       const iframe = document.querySelector("iframe[data-src]");
       if (iframe) iframe.src = iframe.dataset.src;
@@ -188,31 +144,25 @@
       const minimizedIcon = document.getElementById('minimized-icon');
       const openBtn = document.getElementById('open-btn');
 
-      dragHandle.onmousedown = function (event) {
-        event.preventDefault();
-        const startX = event.clientX - player.offsetLeft;
-        const startY = event.clientY - player.offsetTop;
-        function onMouseMove(event) {
-          let x = event.clientX - startX;
-          let y = event.clientY - startY;
-          x = Math.max(0, Math.min(x, window.innerWidth - player.offsetWidth));
-          y = Math.max(0, Math.min(y, window.innerHeight - player.offsetHeight));
-          player.style.left = x + 'px';
-          player.style.top = y + 'px';
-        }
-        document.addEventListener('mousemove', onMouseMove);
-        document.onmouseup = function () {
-          document.removeEventListener('mousemove', onMouseMove);
+      if (dragHandle) {
+        dragHandle.onmousedown = function (event) {
+          event.preventDefault();
+          const startX = event.clientX - player.offsetLeft;
+          const startY = event.clientY - player.offsetTop;
+          function onMouseMove(e) {
+            let x = e.clientX - startX;
+            let y = e.clientY - startY;
+            x = Math.max(0, Math.min(x, window.innerWidth - player.offsetWidth));
+            y = Math.max(0, Math.min(y, window.innerHeight - player.offsetHeight));
+            player.style.left = x + 'px';
+            player.style.top = y + 'px';
+          }
+          document.addEventListener('mousemove', onMouseMove);
+          document.onmouseup = () => document.removeEventListener('mousemove', onMouseMove);
         };
-      };
-      closeBtn.onclick = function () {
-        player.style.display = 'none';
-        minimizedIcon.style.display = 'flex';
-      };
-      openBtn.onclick = function () {
-        player.style.display = 'block';
-        minimizedIcon.style.display = 'none';
-      };
+      }
+      if (closeBtn) closeBtn.onclick = () => { player.style.display = 'none'; minimizedIcon.style.display = 'flex'; };
+      if (openBtn) openBtn.onclick = () => { player.style.display = 'block'; minimizedIcon.style.display = 'none'; };
     };
   </script>
 </body>
