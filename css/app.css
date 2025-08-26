@@ -25918,3 +25918,48 @@ footer .inner-footer .col,
 footer .inner-footer .col-5 {
   flex: 1 1 180px !important;
 }
+
+/* === R2K2 HOME (page-scoped fixes) === */
+#home, #home * { box-sizing: border-box; }
+#home { margin: 0; overflow-x: hidden; }
+
+/* Layout container for home content */
+#home main { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+/* Header & nav */
+#home header nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+}
+#home .logo-title { display: flex; align-items: center; gap: 10px; }
+#home .nav-links { list-style: none; display: flex; gap: 16px; margin: 0; padding: 0; }
+#home .nav-links li { margin: 0; }
+#home .nav-links a { display: inline-block; padding: 8px 10px; line-height: 1; text-decoration: none; }
+
+/* Hero / promo */
+#home .row.text { text-align: center; padding: 24px 0; }
+#home .toggle-images .image-wrapper { display: inline-block; }
+
+/* Footer */
+#home footer .inner-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+  padding: 24px 16px;
+}
+#home footer .inner-footer .col,
+#home footer .inner-footer .col-5 { flex: 1 1 180px; }
+
+/* Hide any stray leaderboard containers if they exist on home */
+#home #top3-cards:empty,
+#home #leaderboard-rows:empty,
+#home #leaderboard-error:empty { display: none !important; }
+
+/* Mobile tweaks */
+@media (max-width: 570px) {
+  #home .draggable { left: 50%; transform: translateX(-50%); }
+}
