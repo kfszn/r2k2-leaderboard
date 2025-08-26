@@ -3,7 +3,7 @@
    - Example: If today is Aug 26 → current cycle = Aug 18 → Sep 18
 */
 
-const RAINBET_KEY = "xxx";  // your Rainbet affiliate key
+const RAINBET_KEY = "OjwJ62YWj7gveE0OkmkrCvRM4U3Omh16";  // your Rainbet affiliate key
 const rewards = [200, 100, 50, 20, 15, 10, 5];
 const START_DAY = 18;
 const END_DAY = 18;
