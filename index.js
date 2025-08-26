@@ -1,6 +1,6 @@
 // index.js for /leaderboard/rainbet
 
-const API_URL = "https://services.rainbet.com/v1/external/affiliates?start_at=2025-07-23&end_at=2025-08-22&key=xxx";
+const API_URL = "https://services.rainbet.com/v1/external/affiliates?start_at=2025-08-18&end_at=2025-09-18&key=xxx";
 const rewards = [200, 100, 50, 20, 15, 10, 5];
 
 function maskUsername(username) {
